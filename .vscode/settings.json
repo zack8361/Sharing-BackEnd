@@ -1,0 +1,13 @@
+{
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "j69.ejs-beautify"
+  },
+  "emmet.includeLanguages": {
+    "ejs": "html"
+  }
+}
+//저장 할때 프리티어의 룰을 따라달라.
