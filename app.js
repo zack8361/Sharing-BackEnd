@@ -40,7 +40,7 @@ app.use(
 // index.js 라우터 설정 -> index.js 는 뒷주소 생략가능.
 const mainRouter = require('./routes/login');
 
-app.use('/login', mainRouter);
+app.use('/', mainRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);

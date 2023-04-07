@@ -2,31 +2,28 @@
 const connection = require('./dbConnect');
 
 // 쿼리 실행문.
-
-const loginDB = {
-  login: (reqBody, cb) => {
+const registerUser = (req, res) => {
+  try {
     connection.query(
-      `select * from user where USER_ID = '${reqBody.id}' and PASSWORD = '${reqBody.password}'`,
+      `SELECT * FROM user WHERE USER_ID = '${req.body.id}';`,
       (err, data) => {
-        if (err) {
-          throw err;
+        if (err) throw err;
+        if (data.length >= 1) {
+          return res.status(400).json('이미 가입된 회원입니다.');
         }
-        cb(data);
+        connection.query(
+          `INSERT INTO user (USER_ID, PASSWORD) values ('${req.body.id}','${req.body.password}');`,
+          (err, data) => {
+            if (err) throw err;
+            res.status(200).json('회원가입 성공');
+          },
+        );
       },
     );
-  },
-  IMG: (cb) => {
-    connection.query(
-      `select * from OBJECT_MAP WHERE OBJECT_TYPE = '${'0001'}'`,
-      (err, data) => {
-        if (err) {
-          throw err;
-        }
-        console.log(data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        cb(data);
-      },
-    );
-  },
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('회원가입 실 알 없는 문제 발생');
+  }
 };
 
-module.exports = loginDB;
+module.exports = { registerUser };
