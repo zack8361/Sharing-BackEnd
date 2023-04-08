@@ -38,9 +38,13 @@ app.use(
 );
 
 // index.js 라우터 설정 -> index.js 는 뒷주소 생략가능.
-const mainRouter = require('./routes/login');
+const loginRouter = require('./routes/login');
+const mainRouter = require('./routes/main');
+const writeRouter = require('./routes/write');
 
+app.use('/', loginRouter);
 app.use('/', mainRouter);
+app.use('/', writeRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);

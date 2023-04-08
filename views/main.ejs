@@ -10,6 +10,24 @@
 
 <body>
   <h1>여기는 메인입니다.</h1>
+  <div class="content">
+    <!--routes/main.js 파일에서 가져온 데이터 값(render로 받아온 값)-->
+    <% if (objectCounts > 0) { %>
+    <% for(let i=0; i <objectCounts; i++) { %>
+    <div>
+      물품 타입 : <%= OBJECT[i].OBJECT_TYPE %>
+    </div>
+    <div>
+      물품명 : <%= OBJECT[i].OBJECT_NAME %>
+    </div>
+    <div>
+      이미지 :
+      <img src="/uploads/<%= OBJECT[i].IMG_SRC %>" width="500" />
+    </div>
+    <% } %>
+    <% } %>
+
+  </div>
 </body>
 
 </html>
