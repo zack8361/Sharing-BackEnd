@@ -39,21 +39,14 @@ app.use(
 
 // index.js 라우터 설정 -> index.js 는 뒷주소 생략가능.
 const loginRouter = require('./routes/login');
-
-// main.js 라우터 생성
 const mainRouter = require('./routes/main');
-
-// submain.js 라우터 생성
 const subMainRouter = require('./routes/subMain');
+const writeRouter = require('./routes/write');
 
-// loginRouter
 app.use('/', loginRouter);
-
-// mainRouter
 app.use('/main', mainRouter);
-
-// subMainRouter
 app.use('/subMain', subMainRouter);
+app.use('/', writeRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
