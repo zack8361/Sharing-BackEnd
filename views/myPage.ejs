@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>THIS IS MYPAGE</h1>
+  <% for(let i=0; i<articleCount; i++) { %>
+  <h1>ID : <%= ARTICLE[i].USER_ID %></h1>
+  <h1>NAME:<%= ARTICLE[i].USER_NAME %></h1>
+  <h1>PhoneNum : <%= ARTICLE[i].PHONE_NUMBER %></h1>
+  <% } %>
+  <br />
+  <hr />
+  <h1>RENTED_OBJECT</h1>
+  <% for(let i=0; i<articleCount2; i++) { %>
+  <span>Code : <%= ARTICLE2[i].CODE %></span>
+  &nbsp;&nbsp;&nbsp;/
+  <span>OBJECT_NAME : <%= ARTICLE2[i].OBJECT_NAME %></span>
+  &nbsp;&nbsp;&nbsp;/
+  <span>STATUS : <%= ARTICLE2[i].STATUS %> </span>
+  &nbsp;&nbsp;&nbsp;/
+  <span>RETURN-DATE : <%= ARTICLE2[i].END_DATE %></span>
+  <hr>
+
+  <% } %>
+</body>
+
+</html>
