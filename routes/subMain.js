@@ -1,9 +1,8 @@
 const express = require('express');
+const { showSubMain } = require('../controllers/subMainController');
 
 const router = express.Router();
 
-router.get('/:OBJECT_TYPE', (req, res) => {
-  res.render('subMain');
-});
+router.get('/:id', showSubMain);
 
 module.exports = router;

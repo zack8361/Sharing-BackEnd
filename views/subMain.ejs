@@ -10,6 +10,16 @@
 
 <body>
   <h1> This is SubMainPage!!!!</h1>
+  <h1>현재 빌릴수 있는 물품 개수 : <%= articleCount %></h1>
+  <ul>
+    <% for(let i=0; i<articleCount; i++) { %>
+    <li>
+      <%= ARTICLE[i].NAME %>
+      <%= ARTICLE[i].STATUS %>
+      <%= ARTICLE[i].END_DATE %>
+    </li>
+    <% } %>
+  </ul>
 </body>
 
 </html>
