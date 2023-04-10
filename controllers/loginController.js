@@ -43,10 +43,11 @@ const loginUser = async (req, res) => {
           return res.status(400).json('비밀번호가 틀렸습니다!');
         }
         // 만약 위에 if 문에서 return 이 되지않았다면 로그인이 성공하였다는 말이니까 session 생성
-        req.session.login = true;
-        req.session.userId = req.body.id;
-        console.log(req.session.userId);
-        res.redirect('/main');
+        // req.session.login = true;
+        // req.session.userId = req.body.id;
+        // console.log(req.session);
+        // const userSession = req.session.userId;
+        res.status(200).json('로그인 성공하였습니다~');
       },
     );
   } catch (error) {

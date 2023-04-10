@@ -33,7 +33,12 @@ app.use(
     secret: 'zack',
     resave: false,
     saveUninitialized: true,
-    cookie: {},
+    cookie: {
+      httpOnly: true,
+      sameSite: 'none',
+      maxAge: 5300000,
+      secure: true,
+    },
   }),
 );
 
@@ -46,7 +51,7 @@ const writeRouter = require('./routes/write');
 app.use('/', loginRouter);
 app.use('/main', mainRouter);
 app.use('/subMain', subMainRouter);
-app.use('/', writeRouter);
+app.use('/write', writeRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);

@@ -8,8 +8,14 @@ const showMain = (req, res) => {
       if (err) throw err;
       const ARTICLE = data;
       const articleCount = ARTICLE.length;
-
-      res.render('main', { ARTICLE, articleCount, userId: req.session.userId });
+      connection.query(
+        `SELECT USER_NAME FROM USER WHERE USER_ID ='${req.params.id}'`,
+        (err2, data2) => {
+          if (err2) throw err2;
+          const NAME = data2[0];
+          res.status(200).json({ ARTICLE, articleCount, NAME });
+        },
+      );
     });
   } catch (error) {
     console.error(error);

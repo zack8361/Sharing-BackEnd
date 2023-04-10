@@ -3,21 +3,24 @@ const { showMain, showMypage } = require('../controllers/mainController');
 
 const router = express.Router();
 
-const isLogin = (req, res, next) => {
-  if (req.session.login) {
-    next();
-  } else {
-    res.send(
-      "<script>alert('로그인 해주세요'); window.location.replace('/login');</script>",
-    );
-  }
-};
+// const isLogin = (req, res, next) => {
+//   console.log(req.session);
+//   // console.log(req);
+//   if (req.session.login) {
+//     next();
+//   } else {
+//     res.send(
+//       "<script>alert('로그인 해주세요'); window.location.replace('/login');</script>",
+//     );
+//   }
+// };
 
 // user_main 화면 출력
-router.get('/', isLogin, showMain);
+// localhost:4000/main
+router.get('/:id', showMain);
 
 // user_mypage 화면 출력
-router.get('/mypage/:id', isLogin, showMypage);
+router.get('/mypage/:id', showMypage);
 const objectDB = require('../controllers/objectController');
 
 router.get('/main', (req, res) => {
