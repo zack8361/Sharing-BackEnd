@@ -12,7 +12,7 @@ const registerUser = async (req, res) => {
           return res.status(400).json('이미 가입된 회원입니다.');
         }
         connection.query(
-          `INSERT INTO user (USER_ID, PASSWORD, USER_NAME, PHONE_NUMBER,TYPE) values ('${req.body.id}','${req.body.password}','${req.body.password}','${req.body.password}','${req.body.password}');`,
+          `INSERT INTO user (USER_ID, PASSWORD, USER_NAME, PHONE_NUMBER,TYPE,TOKEN) values ('${req.body.id}','${req.body.password}','${req.body.phone}','${req.body.name}','0','1');`,
           (err, data) => {
             if (err) throw err;
             // res.status(200).json('회원가입 성공');
