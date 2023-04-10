@@ -4,6 +4,7 @@ const { showMain, showMypage } = require('../controllers/mainController');
 const router = express.Router();
 
 // const isLogin = (req, res, next) => {
+
 //   if (req.session.login) {
 //     next();
 //   } else {
@@ -14,7 +15,10 @@ const router = express.Router();
 // };
 
 // user_main 화면 출력
-router.get('/', showMain);
+
+// localhost:4000/main
+router.get('/:id', showMain);
+
 
 // user_mypage 화면 출력
 router.get('/mypage/:id', showMypage);
