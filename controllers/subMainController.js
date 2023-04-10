@@ -10,7 +10,9 @@ const showSubMain = (req, res) => {
         if (err) throw err;
         const ARTICLE = data;
         const articleCount = ARTICLE.length;
-        res.render('subMain', { ARTICLE, articleCount });
+        res.json({ ARTICLE, articleCount }); // JSON 형태로 데이터 전송
+
+        // res.render('subMain', { ARTICLE, articleCount });
       },
     );
   } catch (error) {

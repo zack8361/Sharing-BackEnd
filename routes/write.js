@@ -18,7 +18,8 @@ const storage = multer.diskStorage({
   },
   // 파일 이름을 설정
   filename: (req, file, cb) => {
-    cb(null, file.fieldname + '_' + Date.now());
+    const ext = file.originalname.split('.').pop();
+    cb(null, file.fieldname + '_' + Date.now() + '.' + ext);
   },
 });
 
@@ -27,7 +28,24 @@ const limits = {
   fileSize: 1024 * 1024 * 2,
 };
 
-const upload = multer({ storage, limits });
+const upload = multer({
+  storage,
+  limits,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype === 'image/png' ||
+      file.mimetype === 'image/jpg' ||
+      file.mimetype === 'image/jpeg' ||
+      file.mimetype === 'image/gif' ||
+      file.mimetype === 'image/svg+xml' || // svg 파일 추가
+      file.originalname.endsWith('.ico')
+    ) {
+      cb(null, true);
+    } else {
+      cb(new Error('올바른 파일 형식이 아닙니다.'));
+    }
+  },
+});
 
 // 서버의 최상단 폴더에 uploads 있는지 확인, 폴더가 없으면 만드는 코드
 if (!fs.existsSync(dir)) fs.mkdirSync(dir);
