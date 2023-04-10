@@ -1,6 +1,10 @@
 // express 설정.
 const express = require('express');
-const { registerUser, loginUser } = require('../controllers/loginController');
+const {
+  registerUser,
+  loginUser,
+  kakaoLoginUser,
+} = require('../controllers/loginController');
 
 // router 설정.
 const router = express.Router();
@@ -17,6 +21,9 @@ router.post('/register', registerUser);
 router.get('/login', (req, res) => {
   res.status(200).json('로그인 완료');
 });
+
+// 카카오톡 회원가입
+router.post('/kakaoRegister', kakaoLoginUser);
 
 // 로그인 등록하기.
 router.post('/login', loginUser);
