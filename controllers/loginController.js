@@ -15,10 +15,7 @@ const registerUser = async (req, res) => {
           `INSERT INTO user (USER_ID, PASSWORD, USER_NAME, PHONE_NUMBER,TYPE,TOKEN) values ('${req.body.id}','${req.body.password}','${req.body.phone}','${req.body.name}','0','1');`,
           (err, data) => {
             if (err) throw err;
-            // res.status(200).json('회원가입 성공');
-            res.send(
-              "<script>alert('회원가입 성공하였습니다.'); window.location.replace('/login');</script>",
-            );
+            res.status(200).json('회원가입 성공');
           },
         );
       },
