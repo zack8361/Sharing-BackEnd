@@ -52,4 +52,28 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+// 카카오 로그인 쿼리
+const kakaoLoginUser = (req, res) => {
+  try {
+    connection.query(
+      `SELECT * FROM mydb.user WHERE USERID = '${req.body.id}';`,
+      (err, data) => {
+        if (err) throw err;
+        if (!data.length === 0) res.status(200).json('카카오 로그인 완료');
+        console.log(req.body);
+        connection.query(
+          `INSERT INTO mydb.user (USER_ID, PASSWORD, USER_NAME, PHONE_NUMBER,TYPE,TOKEN) values ('${req.body.id}', '${req.body.password}', '${req.body.name}', '${req.body.phone}','0','1');`,
+          (err, data) => {
+            if (err) throw err;
+            res.status(200).json('카카오 로그인 완료');
+          },
+        );
+      },
+    );
+  } catch (err) {
+    console.error(err);
+    res.status(500).json('회원가입 실패, 알 수 없는 문제 발생');
+  }
+};
+
+module.exports = { registerUser, loginUser, kakaoLoginUser };
