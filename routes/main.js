@@ -19,7 +19,6 @@ const router = express.Router();
 // localhost:4000/main
 router.get('/:id', showMain);
 
-
 // user_mypage 화면 출력
 router.get('/mypage/:id', showMypage);
 const objectDB = require('../controllers/objectController');

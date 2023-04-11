@@ -11,7 +11,7 @@ const router = express.Router();
 
 // 회원가입 창 띄우기
 router.get('/register', (req, res) => {
-  res.status(200).json('회원가입창 띄윅');
+  res.status(200).json('회원가입창 띄워');
 });
 
 // 회원가입 등록하기.
