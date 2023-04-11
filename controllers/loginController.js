@@ -12,7 +12,7 @@ const registerUser = async (req, res) => {
           return res.status(400).json('이미 가입된 회원입니다.');
         }
         connection.query(
-          `INSERT INTO user (USER_ID, PASSWORD, USER_NAME, PHONE_NUMBER,TYPE,TOKEN) values ('${req.body.id}','${req.body.password}','${req.body.phone}','${req.body.name}','0','1');`,
+          `INSERT INTO user (USER_ID, PASSWORD, USER_NAME, PHONE_NUMBER, TYPE, TOKEN) values ('${req.body.id}','${req.body.password}','${req.body.name}','${req.body.phone}','0','1');`,
           (err, data) => {
             if (err) throw err;
             res.status(200).json('회원가입 성공');
@@ -57,13 +57,15 @@ const loginUser = async (req, res) => {
 const kakaoLoginUser = (req, res) => {
   try {
     connection.query(
-      `SELECT * FROM mydb.user WHERE USERID = '${req.body.id}';`,
+      `SELECT * FROM user WHERE USER_ID = '${req.body.id}';`,
       (err, data) => {
         if (err) throw err;
-        if (!data.length === 0) res.status(200).json('카카오 로그인 완료');
-        console.log(req.body);
+        console.log(data);
+        if (data.length !== 0)
+          return res.status(200).json('카카오 로그인 완료');
+
         connection.query(
-          `INSERT INTO mydb.user (USER_ID, PASSWORD, USER_NAME, PHONE_NUMBER,TYPE,TOKEN) values ('${req.body.id}', '${req.body.password}', '${req.body.name}', '${req.body.phone}','0','1');`,
+          `INSERT INTO user (USER_ID, PASSWORD, USER_NAME, PHONE_NUMBER, TYPE, TOKEN) values ('${req.body.id}','${req.body.password}','${req.body.name}','${req.body.phone}','0','0');`,
           (err, data) => {
             if (err) throw err;
             res.status(200).json('카카오 로그인 완료');
@@ -76,5 +78,4 @@ const kakaoLoginUser = (req, res) => {
     res.status(500).json('회원가입 실패, 알 수 없는 문제 발생');
   }
 };
-
 module.exports = { registerUser, loginUser, kakaoLoginUser };

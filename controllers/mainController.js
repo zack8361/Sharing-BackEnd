@@ -13,6 +13,7 @@ const showMain = (req, res) => {
         (err2, data2) => {
           if (err2) throw err2;
           const NAME = data2[0];
+          console.log(data);
           res.status(200).json({ ARTICLE, articleCount, NAME });
         },
       );
