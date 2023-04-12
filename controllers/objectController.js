@@ -5,11 +5,10 @@ const objectDB = {
   getAllObjects: (cb) => {
     connection.query('SELECT * FROM sharing.object_map;', (err, data) => {
       if (err) throw err;
-      console.log(data);
       cb(data);
     });
   },
-  // 물품 추가
+  // 물품 추가 (관리자 페이지에서 사용)
   // newObject에는 req.body 값들이 객체로 담겨 있음
   addObject: (newObject, cb) => {
     connection.query(

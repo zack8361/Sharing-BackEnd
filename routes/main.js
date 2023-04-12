@@ -23,7 +23,7 @@ router.get('/:id', showMain);
 router.get('/mypage/:id', showMypage);
 const objectDB = require('../controllers/objectController');
 
-router.get('/main', (req, res) => {
+router.get('/', (req, res) => {
   objectDB.getAllObjects((data) => {
     // 컨트롤러에서 받아온 값
     const OBJECT = data;
