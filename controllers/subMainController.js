@@ -24,16 +24,24 @@ const showSubMain = (req, res) => {
 
 const findRentObj = (req, res) => {
   // req.params.id = 0001
-
+  console.log(req.params.id, ' @@@@@@@@@@@@@@@@@@');
+  console.log(req.params.code, '@@@@@@@@@@@@@@@@@@@@@');
+  console.log(req.params.type, ' @@@@@@@@@@@@@@@@@@');
   try {
     connection.query(
       `SELECT * FROM OBJECT WHERE RENT_USER_ID = '${req.params.id}' AND OBJECT_TYPE = '${req.params.type}'`,
       (err, data) => {
         if (err) throw err;
         if (data.length >= 1) {
-          res.status(200).json('이미 빌렸습니다.');
+          res.status(200).json('중복 대여가 불가능한 상품입니다.');
         } else {
-          connection.query('``');
+          connection.query(
+            `UPDATE OBJECT SET RENT_USER_ID = '${req.params.id}',STATUS = 1 WHERE CODE ='${req.params.code}'`,
+            (err2, data2) => {
+              if (err2) throw err2;
+              res.status(200).json('대여가 완료되었습니다.');
+            },
+          );
         }
       },
     );
