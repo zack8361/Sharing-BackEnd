@@ -22,8 +22,6 @@ const showSubMain = (req, res) => {
 };
 
 const findRentObj = (req, res) => {
-  // req.params.id = 0001
-
   try {
     connection.query(
       `SELECT * FROM OBJECT WHERE RENT_USER_ID = '${req.params.id}' AND OBJECT_TYPE = '${req.params.type}'`,
@@ -32,8 +30,15 @@ const findRentObj = (req, res) => {
         if (data.length >= 1) {
           res.status(200).json('중복 대여가 불가능한 상품입니다.');
         } else {
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = `0${today.getMonth() + 1}`.slice(-2);
+          const month2 = `0${today.getMonth() + 2}`.slice(-2);
+          const day = `0${today.getDate()}`.slice(-2);
+          const dateString = `${year}-${month}-${day}`;
+          const dateString2 = `${year}-${month2}-${day}`;
           connection.query(
-            `UPDATE OBJECT SET RENT_USER_ID = '${req.params.id}',STATUS = 1 WHERE CODE ='${req.params.code}'`,
+            `UPDATE OBJECT SET RENT_USER_ID = '${req.params.id}',STATUS = 1, START_DATE = '${dateString}', END_DATE = '${dateString2}'WHERE CODE ='${req.params.code}'`,
             (err2, data2) => {
               if (err2) throw err2;
               res.status(200).json('대여가 완료되었습니다.');
