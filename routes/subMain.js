@@ -8,5 +8,5 @@ const router = express.Router();
 
 router.get('/:id', showSubMain);
 
-router.get('/find/:id/:type', findRentObj);
+router.get('/find/:id/:code/:type', findRentObj);
 module.exports = router;
