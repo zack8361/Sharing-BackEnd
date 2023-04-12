@@ -13,7 +13,7 @@ const showMain = (req, res) => {
         (err2, data2) => {
           if (err2) throw err2;
           const NAME = data2[0];
-          console.log(data);
+
           res.status(200).json({ ARTICLE, articleCount, NAME });
         },
       );
@@ -31,7 +31,7 @@ const showMypage = (req, res) => {
       `SELECT * FROM user WHERE USER_ID = '${req.session.userId}'`,
       (err, data) => {
         if (err) throw err;
-        console.log(data);
+
         const ARTICLE = data;
         const articleCount = ARTICLE.length;
         connection.query(

@@ -3,7 +3,6 @@ const connection = require('./dbConnect');
 
 const showSubMain = (req, res) => {
   try {
-    console.log(req.params.id);
     connection.query(
       `SELECT * FROM OBJECT WHERE OBJECT_TYPE = '${req.params.id}';`,
       (err, data) => {
@@ -24,9 +23,7 @@ const showSubMain = (req, res) => {
 
 const findRentObj = (req, res) => {
   // req.params.id = 0001
-  console.log(req.params.id, ' @@@@@@@@@@@@@@@@@@');
-  console.log(req.params.code, '@@@@@@@@@@@@@@@@@@@@@');
-  console.log(req.params.type, ' @@@@@@@@@@@@@@@@@@');
+
   try {
     connection.query(
       `SELECT * FROM OBJECT WHERE RENT_USER_ID = '${req.params.id}' AND OBJECT_TYPE = '${req.params.type}'`,
