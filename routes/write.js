@@ -18,8 +18,8 @@ const storage = multer.diskStorage({
   },
   // 파일 이름을 설정
   filename: (req, file, cb) => {
-    const ext = file.originalname.split('.').pop();
-    cb(null, file.fieldname + '_' + Date.now() + '.' + ext);
+    // const ext = file.originalname.split('.').pop();
+    cb(null, file.originalname);
   },
 });
 
@@ -38,7 +38,7 @@ const upload = multer({
       file.mimetype === 'image/jpeg' ||
       file.mimetype === 'image/gif' ||
       file.mimetype === 'image/svg+xml' || // svg 파일 추가
-      file.originalname.endsWith('.ico')
+      file.originalname.endsWith('.ico') // ico로 끝나는 파일 허용
     ) {
       cb(null, true);
     } else {
@@ -52,12 +52,12 @@ if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
 // 물품 추가 페이지 불러오기
 const router = express.Router();
-router.get('/write', (req, res) => {
+router.get('/', (req, res) => {
   res.render('write');
 });
 
 // 물품 추가
-router.post('/write', upload.single('img'), (req, res) => {
+router.post('/', upload.single('img'), (req, res) => {
   // 객체로 req.body 값 설정
   const newObject = {
     objectType: req.body.objectType,

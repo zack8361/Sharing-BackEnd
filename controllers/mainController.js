@@ -7,6 +7,8 @@ const showMain = (req, res) => {
     connection.query('SELECT * FROM OBJECT_MAP', (err, data) => {
       if (err) throw err;
       const ARTICLE = data;
+
+      console.log('######', ARTICLE[0].IMG_SRC, '$$$$$');
       const articleCount = ARTICLE.length;
       connection.query(
         `SELECT USER_NAME FROM USER WHERE USER_ID ='${req.params.id}'`,
