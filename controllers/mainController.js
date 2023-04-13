@@ -13,8 +13,19 @@ const showMain = (req, res) => {
         (err2, data2) => {
           if (err2) throw err2;
           const NAME = data2[0];
-
-          res.status(200).json({ ARTICLE, articleCount, NAME });
+          connection.query(
+            `SELECT END_DATE FROM OBJECT WHERE RENT_USER_ID = '${req.params.id}'`,
+            (err3, data3) => {
+              if (err3) throw err3;
+              const DATE = data3;
+              res.status(200).json({
+                ARTICLE,
+                articleCount,
+                NAME,
+                DATE,
+              });
+            },
+          );
         },
       );
     });
