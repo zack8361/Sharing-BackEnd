@@ -4,7 +4,6 @@ const express = require('express');
 const multer = require('multer');
 // Filesystem 모듈 불러오기
 const fs = require('fs');
-
 // 컨트롤러 불러오기
 const objectDB = require('../controllers/objectController');
 
@@ -53,7 +52,7 @@ if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 // 물품 추가 페이지 불러오기
 const router = express.Router();
 router.get('/', (req, res) => {
-  res.render('write');
+  res.status(200).json('/write/ 요청입니다');
 });
 
 // 물품 추가
