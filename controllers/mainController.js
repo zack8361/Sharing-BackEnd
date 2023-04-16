@@ -69,6 +69,50 @@ const showMypage = (req, res) => {
   }
 };
 
+
+// 공지사항 띄우기 요청 방식 = get
+const showNotice = (req, res) => {
+  try {
+    connection.query('SELECT * FROM NOTICE', (err, data) => {
+      if (err) throw err;
+      const ARTICLE = data;
+      res.status(200).json({ ARTICLE });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('실패 입니다');
+  }
+};
+
+// 공지사항 글 추가하기 요청방식 = post
+const writeNotice = (req, res) => {
+  console.log('오긴했니?');
+  console.log(req.body.question, '질문');
+  console.log(req.body.answer, '대답');
+  try {
+    connection.query('SELECT * FROM NOTICE', (err, data) => {
+      if (err) throw err;
+      const LENGTH = data.length;
+      console.log(LENGTH);
+      connection.query(
+        `INSERT INTO NOTICE (CODE,QUESTION,ANSWER) VALUES ('${LENGTH + 1}','${
+          req.body.question
+        }','${req.body.answer}');`,
+      );
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('실패입니다.');
+  }
+};
+
+module.exports = {
+  showMain,
+  showMypage,
+  showNotice,
+  writeNotice,
+};
+
 const postMyImg = (req, res) => {
   // console.log(req.file.filename);
   // console.log(req.params.id);
@@ -93,3 +137,4 @@ const postMyImg = (req, res) => {
   }
 };
 module.exports = { showMain, showMypage, postMyImg };
+

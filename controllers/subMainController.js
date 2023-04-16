@@ -52,5 +52,19 @@ const findRentObj = (req, res) => {
     res.status(500).json('불러오기 실패');
   }
 };
+
+const showSideBar = (req, res) => {
+  try {
+    connection.query('SELECT * FROM OBJECT_MAP', (err, data) => {
+      if (err) throw err;
+      const ARTICLE = data;
+      res.status(200).json({ ARTICLE });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('실패');
+  }
+};
+
 // 중복 체크
-module.exports = { showSubMain, findRentObj };
+module.exports = { showSubMain, findRentObj, showSideBar };

@@ -24,44 +24,7 @@ if (DB_MODE === 'mysql') {
     );
   };
 
-  // 브라우저 로컬 스토리지에 저장 된, 토큰을 검증하는 컨트롤러
-  // 토큰 검증이 완료 되면 원하는 정보를 담아서 전달해 준다 -> 프론트에서는 로그인 처리
-  const verifyToken = (req, res) => {
-    jwt.verify(req.body.token, JWT_ACCESS_SECRET, (err, decoded) => {
-      // 토큰 검증 실패 시, 권한 없음 결과 전달
-      if (err) return res.status(401).json('토큰 기한 만료');
-      // 토큰 검증 성공 시, 토큰을 푼 결과(decoded) 안의 userID 를 받아서 프론트에 전달
-      return res
-        .status(200)
-        .json({ user_ID: decoded.user_ID, msg: '토큰 검증 완료' });
-    });
-  };
 
-  // 회원가입 쿼리
-  const registerUser = async (req, res) => {
-    try {
-      connection.query(
-        `SELECT * FROM ${MYSQL_DB}.${MYSQL_TABLE} WHERE USER_ID = '${req.body.id}';`,
-        (err, data) => {
-          if (err) throw err;
-          if (data.length >= 1)
-            return res.status(400).json('이미 가입된 회원입니다.');
-          // bcrypt 모듈을 사용하여 비밀번호를 암호화하여 저장
-          const encryptedPassword = bcrypt.hashSync(req.body.password, 10);
-          connection.query(
-            `INSERT INTO ${MYSQL_DB}.${MYSQL_TABLE} (USER_ID, PASSWORD, USER_NAME, PHONE_NUMBER, TYPE, TOKEN) values ('${req.body.id}','${encryptedPassword}','${req.body.name}','${req.body.phone}','0','1');`,
-            (err, data) => {
-              if (err) throw err;
-              res.status(200).json('회원가입 성공');
-            },
-          );
-        },
-      );
-    } catch (error) {
-      console.error(error);
-      res.status(500).json('회원가입 실 알 없는 문제 발생');
-    }
-  };
 
   // 로그인 쿼리
   const loginUser = async (req, res) => {

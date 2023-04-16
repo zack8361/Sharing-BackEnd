@@ -1,4 +1,12 @@
 const express = require('express');
+
+const {
+  showMain,
+  showMypage,
+  showNotice,
+  writeNotice,
+} = require('../controllers/mainController');
+
 const multer = require('multer');
 const fs = require('fs');
 
@@ -51,6 +59,7 @@ const upload = multer({
 // 서버의 최상단 폴더에 uploads 있는지 확인, 폴더가 없으면 만드는 코드
 if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
+
 const router = express.Router();
 
 // const isLogin = (req, res, next) => {
@@ -73,7 +82,15 @@ router.get('/:id', showMain);
 router.get('/mypage/:id', showMypage);
 const objectDB = require('../controllers/objectController');
 
+
+// notice 페이지 화면 출력
+router.get('/manager/notice', showNotice);
+
+// notice 페이지 데이터 추가
+router.post('/manager/notice', writeNotice);
+
 router.post('/mypage/:id', upload.single('image'), postMyImg);
+
 
 router.get('/', (req, res) => {
   objectDB.getAllObjects((data) => {
