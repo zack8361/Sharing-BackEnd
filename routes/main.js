@@ -9,7 +9,10 @@ const {
   showNotice,
   writeNotice,
   postMyImg,
+  commonImg,
 } = require('../controllers/mainController');
+
+const objectDB = require('../controllers/objectController');
 
 // Filesystem 모듈 불러오기
 
@@ -57,25 +60,11 @@ if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
 const router = express.Router();
 
-// const isLogin = (req, res, next) => {
-
-//   if (req.session.login) {
-//     next();
-//   } else {
-//     res.send(
-//       "<script>alert('로그인 해주세요'); window.location.replace('/login');</script>",
-//     );
-//   }
-// };
-
-// user_main 화면 출력
-
 // localhost:4000/main
 router.get('/:id', showMain);
 
 // user_mypage 화면 출력
 router.get('/mypage/:id', showMypage);
-const objectDB = require('../controllers/objectController');
 
 // notice 페이지 화면 출력
 router.get('/manager/notice', showNotice);
@@ -83,7 +72,11 @@ router.get('/manager/notice', showNotice);
 // notice 페이지 데이터 추가
 router.post('/manager/notice', writeNotice);
 
+// mypage 이미지 업로드
 router.post('/mypage/:id', upload.single('image'), postMyImg);
+
+// mypage 기본 이미지로 변경
+router.post('/mypage/common/:id', commonImg);
 
 router.get('/', (req, res) => {
   objectDB.getAllObjects((data) => {
