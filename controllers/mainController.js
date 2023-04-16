@@ -69,7 +69,6 @@ const showMypage = (req, res) => {
   }
 };
 
-
 // 공지사항 띄우기 요청 방식 = get
 const showNotice = (req, res) => {
   try {
@@ -106,13 +105,6 @@ const writeNotice = (req, res) => {
   }
 };
 
-module.exports = {
-  showMain,
-  showMypage,
-  showNotice,
-  writeNotice,
-};
-
 const postMyImg = (req, res) => {
   // console.log(req.file.filename);
   // console.log(req.params.id);
@@ -136,5 +128,11 @@ const postMyImg = (req, res) => {
     res.status(500).json('다시해');
   }
 };
-module.exports = { showMain, showMypage, postMyImg };
 
+module.exports = {
+  showMain,
+  showMypage,
+  showNotice,
+  writeNotice,
+  postMyImg,
+};
