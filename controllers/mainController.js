@@ -129,6 +129,7 @@ const postMyImg = (req, res) => {
   }
 };
 
+
 const commonImg = (req, res) => {
   try {
     connection.query(
@@ -143,6 +144,7 @@ const commonImg = (req, res) => {
     res.status(500).json('실패');
   }
 };
+
 module.exports = {
   showMain,
   showMypage,
