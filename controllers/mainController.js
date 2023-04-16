@@ -128,10 +128,28 @@ const postMyImg = (req, res) => {
     res.status(500).json('다시해');
   }
 };
+
+
+const commonImg = (req, res) => {
+  try {
+    connection.query(
+      `UPDATE USER SET PROFILE_IMG = '' WHERE USER_ID = '${req.params.id}'`,
+      (err, data) => {
+        if (err) throw err;
+        console.log(data);
+      },
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('실패');
+  }
+};
+
 module.exports = {
   showMain,
   showMypage,
   showNotice,
   writeNotice,
   postMyImg,
+  commonImg,
 };
