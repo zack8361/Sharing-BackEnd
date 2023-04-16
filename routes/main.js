@@ -1,5 +1,10 @@
 const express = require('express');
-const { showMain, showMypage } = require('../controllers/mainController');
+const {
+  showMain,
+  showMypage,
+  showNotice,
+  writeNotice,
+} = require('../controllers/mainController');
 
 const router = express.Router();
 
@@ -22,6 +27,12 @@ router.get('/:id', showMain);
 // user_mypage 화면 출력
 router.get('/mypage/:id', showMypage);
 const objectDB = require('../controllers/objectController');
+
+// notice 페이지 화면 출력
+router.get('/manager/notice', showNotice);
+
+// notice 페이지 데이터 추가
+router.post('/manager/notice', writeNotice);
 
 router.get('/', (req, res) => {
   objectDB.getAllObjects((data) => {
