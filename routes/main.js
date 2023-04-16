@@ -1,5 +1,55 @@
 const express = require('express');
-const { showMain, showMypage } = require('../controllers/mainController');
+const multer = require('multer');
+const fs = require('fs');
+
+const {
+  showMain,
+  showMypage,
+  postMyImg,
+} = require('../controllers/mainController');
+// Filesystem 모듈 불러오기
+
+// 파일 업로드 설정
+const dir = './profile';
+// 저장 설정
+const storage = multer.diskStorage({
+  // 업로드를 할 폴더 설정
+  destination: (req, file, cb) => {
+    cb(null, dir);
+  },
+  // 파일 이름을 설정
+  filename: (req, file, cb) => {
+    // const ext = file.originalname.split('.').pop();
+    cb(null, file.originalname);
+  },
+});
+
+// 파일 크기 제한
+const limits = {
+  fileSize: 1024 * 1024 * 2,
+};
+
+const upload = multer({
+  storage,
+  limits,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype === 'image/png' ||
+      file.mimetype === 'image/jpg' ||
+      file.mimetype === 'image/jpeg' ||
+      file.mimetype === 'image/gif' ||
+      file.mimetype === 'image/svg+xml' || // svg 파일 추가
+      file.originalname.endsWith('.ico') // ico로 끝나는 파일 허용
+    ) {
+      cb(null, true);
+    } else {
+      cb(new Error('올바른 파일 형식이 아닙니다.'));
+    }
+  },
+});
+
+// 서버의 최상단 폴더에 uploads 있는지 확인, 폴더가 없으면 만드는 코드
+if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
 const router = express.Router();
 
@@ -23,6 +73,8 @@ router.get('/:id', showMain);
 router.get('/mypage/:id', showMypage);
 const objectDB = require('../controllers/objectController');
 
+router.post('/mypage/:id', upload.single('image'), postMyImg);
+
 router.get('/', (req, res) => {
   objectDB.getAllObjects((data) => {
     // 컨트롤러에서 받아온 값
@@ -31,6 +83,7 @@ router.get('/', (req, res) => {
 
     // 메인 페이지에 값 전달하기
     res.render('main', { OBJECT, objectCounts });
+    res.status(200).json('main', { OBJECT, objectCounts });
   });
 });
 

@@ -22,15 +22,16 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 // 사진 업로드 주소요청.
 app.use('/uploads', express.static('uploads'));
+app.use('/profile', express.static('profile'));
 // body-parser 을 선언하는 이유 -> form 태그 내에 데이터를 이용하기 위해
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // cookie-parser 사용
-app.use(cookieParser('zack'));
+app.use(cookieParser('jack'));
 // session 사용
 app.use(
   session({
-    secret: 'zack',
+    secret: 'jack',
     resave: false,
     saveUninitialized: true,
     cookie: {
