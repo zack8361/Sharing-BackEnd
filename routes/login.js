@@ -4,6 +4,7 @@ const {
   registerUser,
   loginUser,
   kakaoLoginUser,
+  verifyToken,
 } = require('../controllers/loginController');
 
 // router 설정.
@@ -27,4 +28,5 @@ router.post('/kakaoRegister', kakaoLoginUser);
 
 // 로그인 등록하기.
 router.post('/login', loginUser);
+router.post('/token', verifyToken);
 module.exports = router;

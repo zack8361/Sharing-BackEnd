@@ -6,9 +6,11 @@ module.exports = {
     'no-console': 'off',
     'operator-linebreak': 'off',
     'consistent-return': 'off',
+    camelcase: 'off',
     'nonblock-statement-body-position': 'off',
     'import/no-extraneous-dependencies': 'off',
     curly: 'off',
+    'arrow-body-style': 'false',
   },
   parserOptions: {
     ecmaVersion: 'latest',
