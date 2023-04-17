@@ -9,6 +9,7 @@ const {
   showNotice,
   writeNotice,
   postMyImg,
+  deleteNotice,
   commonImg,
 } = require('../controllers/mainController');
 
@@ -74,6 +75,9 @@ router.get('/manager/notice', showNotice);
 
 // notice 페이지 데이터 추가
 router.post('/manager/notice', writeNotice);
+
+// notice 페이지 데이터 삭제
+router.post('/manager/notice/:id', deleteNotice);
 
 // mypage 이미지 업로드
 router.post('/mypage/:id', upload.single('image'), postMyImg);

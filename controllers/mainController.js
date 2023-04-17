@@ -101,9 +101,25 @@ const writeNotice = (req, res) => {
         },
       );
     });
+    res.status(200).json('성공');
   } catch (error) {
     console.error(error);
     res.status(500).json('실패입니다.');
+  }
+};
+
+const deleteNotice = (req, res) => {
+  try {
+    connection.query(
+      `DELETE FROM NOTICE WHERE CODE = '${req.params.id}'`,
+      (err, data) => {
+        if (err) throw err;
+        res.status(200).json('삭제 성공');
+      },
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).json('삭제 실패');
   }
 };
 
@@ -152,4 +168,5 @@ module.exports = {
   writeNotice,
   postMyImg,
   commonImg,
+  deleteNotice,
 };
