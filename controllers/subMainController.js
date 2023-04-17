@@ -27,11 +27,6 @@ const findRentObj = (req, res) => {
       `SELECT * FROM OBJECT WHERE RENT_USER_ID = '${req.params.id}' AND OBJECT_TYPE = '${req.params.type}'`,
       (err, data) => {
         if (err) throw err;
-
-        // const ARTICLE = data;
-        // const cnt = ARTICLE[0].RENT_COUNT;
-        // const totalCnt = cnt + 1;
-        // console.log(totalCnt);
         if (data.length >= 1) {
           res.status(200).json('중복 대여가 불가능한 상품입니다.');
         } else {
@@ -42,7 +37,6 @@ const findRentObj = (req, res) => {
           const day = `0${today.getDate()}`.slice(-2);
           const dateString = `${year}-${month}-${day}`;
           const dateString2 = `${year}-${month2}-${day}`;
-
           connection.query(
             `UPDATE OBJECT SET RENT_USER_ID = '${req.params.id}',STATUS = 1, START_DATE = '${dateString}', END_DATE = '${dateString2}' ,RENT_COUNT = 1 WHERE CODE ='${req.params.code}'`,
             (err2, data2) => {

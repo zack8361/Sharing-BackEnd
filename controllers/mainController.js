@@ -1,5 +1,5 @@
 // mysql 연결된 dbConnect 불러오기.
-const { rawListeners } = require('./dbConnect');
+
 const connection = require('./dbConnect');
 
 // main 쿼리
