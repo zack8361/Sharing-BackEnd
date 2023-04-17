@@ -75,20 +75,18 @@ router.post('/manager/notice', writeNotice);
 // mypage 이미지 업로드
 router.post('/mypage/:id', upload.single('image'), postMyImg);
 
-
 // mypage 기본 이미지로 변경
 router.post('/mypage/common/:id', commonImg);
 
-router.get('/', (req, res) => {
-  objectDB.getAllObjects((data) => {
-    // 컨트롤러에서 받아온 값
-    const OBJECT = data;
-    const objectCounts = OBJECT.length;
+// router.get('/', (req, res) => {
+//   objectDB.getAllObjects((data) => {
+//     // 컨트롤러에서 받아온 값
+//     const OBJECT = data;
+//     const objectCounts = OBJECT.length;
 
-    // 메인 페이지에 값 전달하기
-    res.render('main', { OBJECT, objectCounts });
-    res.status(200).json('main', { OBJECT, objectCounts });
-  });
-});
+//     // 메인 페이지에 값 전달하기
+//     res.status(200).json('main', { OBJECT, objectCounts });
+//   });
+// });
 
 module.exports = router;
