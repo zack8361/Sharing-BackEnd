@@ -16,6 +16,9 @@ const objectDB = require('../controllers/objectController');
 
 // Filesystem 모듈 불러오기
 
+// 기본 이미지 파일명
+const defaultImage = 'mypage_user.png';
+
 // 파일 업로드 설정
 const dir = './profile';
 // 저장 설정

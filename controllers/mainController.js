@@ -138,6 +138,7 @@ const commonImg = (req, res) => {
         res.status(200).json('성공');
       },
     );
+    res.status(200).json('성공');
   } catch (error) {
     console.error(error);
     res.status(500).json('실패');
