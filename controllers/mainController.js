@@ -129,7 +129,6 @@ const postMyImg = (req, res) => {
   }
 };
 
-
 const commonImg = (req, res) => {
   try {
     connection.query(
@@ -139,6 +138,7 @@ const commonImg = (req, res) => {
         console.log(data);
       },
     );
+    res.status(200).json('성공');
   } catch (error) {
     console.error(error);
     res.status(500).json('실패');
