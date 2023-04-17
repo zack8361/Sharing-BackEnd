@@ -53,6 +53,21 @@ const findRentObj = (req, res) => {
   }
 };
 
+// 관리자가 각 물품 페이지에서 물품 추가하는 요청
+const appendObject = (req, res) => {
+  try {
+    console.log(req.params.type);
+    console.log(req.body.inputObjectName);
+    connection.query(
+      `INSERT INTO OBJECT (CODE, OBJECT_TYPE, RENT_USER_ID, STATUS, START_DATE, END_DATE, NAME, OBJECT_IMG)
+      VALUES ('${req.body.inputObjectCode}', '${req.params.type}', NULL, ${req.body.inputObjectStatus}, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH), '${req.body.inputObjectName}', NULL)`,
+    );
+  } catch {
+    console.log(error);
+    res.status(500).json('물품 못받아옴');
+  }
+};
+
 const showSideBar = (req, res) => {
   try {
     connection.query('SELECT * FROM OBJECT_MAP', (err, data) => {
@@ -67,4 +82,4 @@ const showSideBar = (req, res) => {
 };
 
 // 중복 체크
-module.exports = { showSubMain, findRentObj, showSideBar };
+module.exports = { showSubMain, findRentObj, showSideBar, appendObject };
