@@ -14,6 +14,7 @@ const showLog = (req, res) => {
   }
 };
 
+
 const showLog2 = (req, res) => {
   try {
     connection.query(
@@ -31,3 +32,4 @@ const showLog2 = (req, res) => {
 };
 
 module.exports = { showLog, showLog2 };
+

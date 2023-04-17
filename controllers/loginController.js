@@ -24,6 +24,16 @@ if (DB_MODE === 'mysql') {
     );
   };
 
+  const verifyToken = (req, res) => {
+    jwt.verify(req.body.token, JWT_ACCESS_SECRET, (err, decoded) => {
+      // 토큰 검증 실패 시, 권한 없음 결과 전달
+      if (err) return res.status(401).json('토큰 기한 만료');
+      // 토큰 검증 성공 시, 토큰을 푼 결과(decoded) 안의 userID 를 받아서 프론트에 전달
+      return res
+        .status(200)
+        .json({ user_ID: decoded.user_ID, msg: '토큰 검증 완료' });
+    });
+  };
   // 로그인 쿼리
   const loginUser = async (req, res) => {
     try {
@@ -61,16 +71,7 @@ if (DB_MODE === 'mysql') {
       res.status(500).json('로그인 실패 알수 없는 문제');
     }
   };
-  const verifyToken = (req, res) => {
-    jwt.verify(req.body.token, JWT_ACCESS_SECRET, (err, decoded) => {
-      // 토큰 검증 실패 시, 권한 없음 결과 전달
-      if (err) return res.status(401).json('토큰 기한 만료');
-      // 토큰 검증 성공 시, 토큰을 푼 결과(decoded) 안의 userID 를 받아서 프론트에 전달
-      return res
-        .status(200)
-        .json({ user_ID: decoded.user_ID, msg: '토큰 검증 완료' });
-    });
-  };
+
   const registerUser = async (req, res) => {
     try {
       connection.query(

@@ -1,4 +1,5 @@
 // mysql 연결된 dbConnect 불러오기.
+
 const connection = require('./dbConnect');
 
 // main 쿼리
@@ -85,9 +86,6 @@ const showNotice = (req, res) => {
 
 // 공지사항 글 추가하기 요청방식 = post
 const writeNotice = (req, res) => {
-  console.log('오긴했니?');
-  console.log(req.body.question, '질문');
-  console.log(req.body.answer, '대답');
   try {
     connection.query('SELECT * FROM NOTICE', (err, data) => {
       if (err) throw err;
@@ -97,6 +95,10 @@ const writeNotice = (req, res) => {
         `INSERT INTO NOTICE (CODE,QUESTION,ANSWER) VALUES ('${LENGTH + 1}','${
           req.body.question
         }','${req.body.answer}');`,
+        (err, data) => {
+          if (err) throw err;
+          res.status(200).json('성공');
+        },
       );
     });
   } catch (error) {
@@ -106,11 +108,8 @@ const writeNotice = (req, res) => {
 };
 
 const postMyImg = (req, res) => {
-  // console.log(req.file.filename);
-  // console.log(req.params.id);
   console.log('왓니? 정혁아~');
   try {
-    console.log(req.file);
     connection.query(
       `UPDATE USER SET PROFILE_IMG = '${req.file.filename}' WHERE USER_ID = '${req.params.id}'`,
       (err3, data3) => {
@@ -136,13 +135,16 @@ const commonImg = (req, res) => {
       (err, data) => {
         if (err) throw err;
         console.log(data);
+        res.status(200).json('성공');
       },
     );
+    res.status(200).json('성공');
   } catch (error) {
     console.error(error);
     res.status(500).json('실패');
   }
 };
+
 module.exports = {
   showMain,
   showMypage,

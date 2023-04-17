@@ -38,7 +38,7 @@ const findRentObj = (req, res) => {
           const dateString = `${year}-${month}-${day}`;
           const dateString2 = `${year}-${month2}-${day}`;
           connection.query(
-            `UPDATE OBJECT SET RENT_USER_ID = '${req.params.id}',STATUS = 1, START_DATE = '${dateString}', END_DATE = '${dateString2}'WHERE CODE ='${req.params.code}'`,
+            `UPDATE OBJECT SET RENT_USER_ID = '${req.params.id}',STATUS = 1, START_DATE = '${dateString}', END_DATE = '${dateString2}' ,RENT_COUNT = 1 WHERE CODE ='${req.params.code}'`,
             (err2, data2) => {
               if (err2) throw err2;
               res.status(200).json('대여가 완료되었습니다.');
