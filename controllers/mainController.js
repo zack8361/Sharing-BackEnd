@@ -114,11 +114,9 @@ const deleteNotice = (req, res) => {
       (err, data) => {
         if (err) throw err;
       },
-    );
-    res.status(200).json('삭제 성공');
+      res.status(200).json('삭제 성공');
   } catch (error) {
     console.error(error);
-
   }
 };
 
