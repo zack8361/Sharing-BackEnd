@@ -11,6 +11,7 @@ const {
   postMyImg,
   deleteNotice,
   commonImg,
+  deleteNotice,
 } = require('../controllers/mainController');
 
 const objectDB = require('../controllers/objectController');
@@ -84,6 +85,9 @@ router.post('/mypage/:id', upload.single('image'), postMyImg);
 
 // mypage 기본 이미지로 변경
 router.post('/mypage/common/:id', commonImg);
+
+// 공지사항 삭제
+router.delete('/manager/notice/:code', deleteNotice);
 
 // router.get('/', (req, res) => {
 //   objectDB.getAllObjects((data) => {
