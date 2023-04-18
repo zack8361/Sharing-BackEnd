@@ -100,6 +100,7 @@ const writeNotice = (req, res) => {
         },
       );
     });
+    res.status(200).json('성공');
   } catch (error) {
     console.error(error);
     res.status(500).json('실패입니다.');
@@ -116,6 +117,7 @@ const deleteNotice = (req, res) => {
     res.status(200).json('삭제완료');
   } catch (error) {
     console.error(error);
+
   }
 };
 
