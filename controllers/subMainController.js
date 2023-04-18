@@ -22,6 +22,7 @@ const showSubMain = (req, res) => {
 };
 
 const findRentObj = (req, res) => {
+  console.log('야너도?');
   try {
     connection.query(
       `SELECT * FROM OBJECT WHERE RENT_USER_ID = '${req.params.id}' AND OBJECT_TYPE = '${req.params.type}'`,
@@ -38,7 +39,7 @@ const findRentObj = (req, res) => {
           const dateString = `${year}-${month}-${day}`;
           const dateString2 = `${year}-${month2}-${day}`;
           connection.query(
-            `UPDATE OBJECT SET RENT_USER_ID = '${req.params.id}',STATUS = 1, START_DATE = '${dateString}', END_DATE = '${dateString2}' ,RENT_COUNT = 1 WHERE CODE ='${req.params.code}'`,
+            `UPDATE OBJECT SET RENT_USER_ID = '${req.params.id}',STATUS = 1, START_DATE = '${dateString}', END_DATE = '${dateString2}', RENT_COUNT = 1 WHERE CODE ='${req.params.code}'`,
             (err2, data2) => {
               if (err2) throw err2;
               res.status(200).json('대여가 완료되었습니다.');
@@ -58,8 +59,8 @@ const appendObject = (req, res) => {
   console.log('추가 백엔드', req.body);
   try {
     connection.query(
-      `INSERT INTO OBJECT (CODE, OBJECT_TYPE, RENT_USER_ID, STATUS, START_DATE, END_DATE, NAME, OBJECT_IMG)
-      VALUES ('${req.body.inputObjectCode}', '${req.params.type}', NULL, ${req.body.inputObjectStatus}, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH), '${req.body.inputObjectName}', NULL)`,
+      `INSERT INTO OBJECT (CODE, OBJECT_TYPE, RENT_USER_ID, STATUS, START_DATE, END_DATE, NAME, OBJECT_IMG, RENT_COUNT)
+      VALUES ('${req.body.inputObjectCode}', '${req.params.type}', NULL, ${req.body.inputObjectStatus}, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH), '${req.body.inputObjectName}', NULL, 0)`,
       (err, data) => {
         if (err) throw err;
         res.status(200).json('성공');

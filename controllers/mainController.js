@@ -124,6 +124,7 @@ const deleteNotice = (req, res) => {
 
 const postMyImg = (req, res) => {
   console.log('왓니? 정혁아~');
+  console.log(req.file.filename);
   try {
     connection.query(
       `UPDATE USER SET PROFILE_IMG = '${req.file.filename}' WHERE USER_ID = '${req.params.id}'`,
@@ -165,21 +166,12 @@ const managerImg = (req, res) => {
   console.log(data);
   // const code = JSON.parse(req.body.code);
   try {
+    console.log(data);
     connection.query(
-      'SELECT * FROM OBJECT_MAP ORDER BY OBJECT_TYPE DESC LIMIT 1',
+      `INSERT INTO OBJECT_MAP (OBJECT_TYPE, OBJECT_NAME, IMG_SRC) VALUES ('${data.productcode}', '${data.productname}', '${req.file.filename}')`,
       (err, data) => {
         if (err) throw err;
-        // const oldObjType = Number(lastData[0].OBJECT_TYPE.replace('0', ''));
-        // const newObjType = String(oldObjType + 1);
-        // const newObjTypePad = newObjType.padStart(4, '0');
-
-        connection.query(
-          `INSERT INTO OBJECT_MAP (OBJECT_TYPE, OBJECT_NAME, IMG_SRC) VALUES ('${data.productcode}', '${data.productname}', '${req.file.filename}')`,
-          (err, data) => {
-            if (err) throw err;
-            res.status(200).json('성공');
-          },
-        );
+        res.status(200).json('성공');
       },
     );
   } catch (error) {
@@ -195,7 +187,7 @@ const deleteData = (req, res) => {
 
   try {
     connection.query(
-      `DELETE FROM OBJECT_MAP WHERE OBJECT_TYPE = ${req.params.type}`,
+      `DELETE FROM OBJECT_MAP WHERE OBJECT_TYPE = '${req.params.type}'`,
       (err, data) => {
         if (err) throw err;
         console.log(data);
@@ -220,5 +212,4 @@ module.exports = {
   deleteData,
 
   deleteNotice,
-
 };

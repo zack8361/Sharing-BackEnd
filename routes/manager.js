@@ -12,7 +12,6 @@ const {
   showAcceptReturn,
 } = require('../controllers/managerController');
 
-
 // 컨트롤러 불러오기
 const objectDB = require('../controllers/objectController');
 
