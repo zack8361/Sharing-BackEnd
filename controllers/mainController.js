@@ -96,7 +96,7 @@ const writeNotice = (req, res) => {
         }','${req.body.answer}');`,
         (err, data) => {
           if (err) throw err;
-          res.status(200).json('성공');
+          // res.status(200).json('성공');
         },
       );
     });
@@ -113,8 +113,10 @@ const deleteNotice = (req, res) => {
     connection.query(`DELETE FROM NOTICE WHERE CODE = '${req.params.code}'`),
       (err, data) => {
         if (err) throw err;
-      };
-    res.status(200).json('삭제완료');
+      },
+    );
+    res.status(200).json('삭제 성공');
+
   } catch (error) {
     console.error(error);
 
