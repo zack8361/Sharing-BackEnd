@@ -1,5 +1,7 @@
 // mysql 연결된 dbConnect 불러오기.
 
+const { request } = require('express');
+
 const connection = require('./dbConnect');
 
 // main 쿼리
@@ -157,6 +159,55 @@ const commonImg = (req, res) => {
   }
 };
 
+// manager img 업로드
+const managerImg = (req, res) => {
+  const data = JSON.parse(req.body.data);
+  console.log(data);
+  // const code = JSON.parse(req.body.code);
+  try {
+    connection.query(
+      'SELECT * FROM OBJECT_MAP ORDER BY OBJECT_TYPE DESC LIMIT 1',
+      (err, data) => {
+        if (err) throw err;
+        // const oldObjType = Number(lastData[0].OBJECT_TYPE.replace('0', ''));
+        // const newObjType = String(oldObjType + 1);
+        // const newObjTypePad = newObjType.padStart(4, '0');
+
+        connection.query(
+          `INSERT INTO OBJECT_MAP (OBJECT_TYPE, OBJECT_NAME, IMG_SRC) VALUES ('${data.productcode}', '${data.productname}', '${req.file.filename}')`,
+          (err, data) => {
+            if (err) throw err;
+            res.status(200).json('성공');
+          },
+        );
+      },
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('실패');
+  }
+};
+
+// manager rent 삭제
+const deleteData = (req, res) => {
+  // const data = JSON.parse(req.body.data);
+  // console.log(data.productname)
+
+  try {
+    connection.query(
+      `DELETE FROM OBJECT_MAP WHERE OBJECT_TYPE = ${req.params.type}`,
+      (err, data) => {
+        if (err) throw err;
+        console.log(data);
+        res.status(200).json('성공');
+      },
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('실패');
+  }
+};
+
 module.exports = {
   showMain,
   showMypage,
@@ -164,5 +215,10 @@ module.exports = {
   writeNotice,
   postMyImg,
   commonImg,
+
+  managerImg,
+  deleteData,
+
   deleteNotice,
+
 };
