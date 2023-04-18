@@ -62,6 +62,7 @@ const appendObject = (req, res) => {
       `INSERT INTO OBJECT (CODE, OBJECT_TYPE, RENT_USER_ID, STATUS, START_DATE, END_DATE, NAME, OBJECT_IMG)
       VALUES ('${req.body.inputObjectCode}', '${req.params.type}', NULL, ${req.body.inputObjectStatus}, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH), '${req.body.inputObjectName}', NULL)`,
     );
+    res.status(200).json('성공');
   } catch {
     console.log(error);
     res.status(500).json('물품 못받아옴');

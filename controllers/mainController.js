@@ -97,7 +97,7 @@ const writeNotice = (req, res) => {
         }','${req.body.answer}');`,
         (err, data) => {
           if (err) throw err;
-          res.status(200).json('성공');
+          // res.status(200).json('성공');
         },
       );
     });
@@ -114,9 +114,9 @@ const deleteNotice = (req, res) => {
       `DELETE FROM NOTICE WHERE CODE = '${req.params.id}'`,
       (err, data) => {
         if (err) throw err;
-        res.status(200).json('삭제 성공');
       },
     );
+    res.status(200).json('삭제 성공');
   } catch (error) {
     console.log(error);
     res.status(500).json('삭제 실패');
@@ -151,7 +151,6 @@ const commonImg = (req, res) => {
       (err, data) => {
         if (err) throw err;
         console.log(data);
-        res.status(200).json('성공');
       },
     );
     res.status(200).json('성공');
