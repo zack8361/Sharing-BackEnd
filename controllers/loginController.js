@@ -24,7 +24,7 @@ if (DB_MODE === 'mysql') {
     );
   };
 
- const verifyToken = (req, res) => {
+  const verifyToken = (req, res) => {
     jwt.verify(req.body.token, JWT_ACCESS_SECRET, (err, decoded) => {
       // 토큰 검증 실패 시, 권한 없음 결과 전달
       if (err) return res.status(401).json('토큰 기한 만료');
@@ -52,7 +52,6 @@ if (DB_MODE === 'mysql') {
           const isSamePassword = req.body.password === data[0].PASSWORD;
           // 비번이 동일하면 로그인이 성공 하였으므로, 토큰을 발행 합니다!
           if (isSamePassword) {
-            console.log('data[0]', data[0]);
             // jwt 모듈을 사용하여 accessToken 발행
             const accessToken = await issueToken(data[0].USER_ID);
 
@@ -71,7 +70,7 @@ if (DB_MODE === 'mysql') {
       res.status(500).json('로그인 실패 알수 없는 문제');
     }
   };
- 
+
   const registerUser = async (req, res) => {
     try {
       connection.query(
@@ -105,7 +104,6 @@ if (DB_MODE === 'mysql') {
         `SELECT * FROM user WHERE USER_ID = '${req.body.id}';`,
         (err, data) => {
           if (err) throw err;
-          console.log(data);
           if (data.length !== 0)
             return res.status(200).json({
               token: accessToken,

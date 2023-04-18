@@ -9,12 +9,16 @@ const {
   showNotice,
   writeNotice,
   postMyImg,
+  deleteNotice,
   commonImg,
 } = require('../controllers/mainController');
 
 const objectDB = require('../controllers/objectController');
 
 // Filesystem 모듈 불러오기
+
+// 기본 이미지 파일명
+const defaultImage = 'mypage_user.png';
 
 // 파일 업로드 설정
 const dir = './profile';
@@ -75,19 +79,22 @@ router.post('/manager/notice', writeNotice);
 // mypage 이미지 업로드
 router.post('/mypage/:id', upload.single('image'), postMyImg);
 
+
 // mypage 기본 이미지로 변경
 router.post('/mypage/common/:id', commonImg);
 
-router.get('/', (req, res) => {
-  objectDB.getAllObjects((data) => {
-    // 컨트롤러에서 받아온 값
-    const OBJECT = data;
-    const objectCounts = OBJECT.length;
+// 공지사항 삭제
+router.delete('/manager/notice/:code', deleteNotice);
 
-    // 메인 페이지에 값 전달하기
-    res.render('main', { OBJECT, objectCounts });
-    res.status(200).json('main', { OBJECT, objectCounts });
-  });
-});
+// router.get('/', (req, res) => {
+//   objectDB.getAllObjects((data) => {
+//     // 컨트롤러에서 받아온 값
+//     const OBJECT = data;
+//     const objectCounts = OBJECT.length;
+
+//     // 메인 페이지에 값 전달하기
+//     res.status(200).json('main', { OBJECT, objectCounts });
+//   });
+// });
 
 module.exports = router;

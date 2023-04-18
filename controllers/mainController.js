@@ -1,5 +1,7 @@
 // mysql 연결된 dbConnect 불러오기.
+
 const { request } = require('express');
+
 const connection = require('./dbConnect');
 
 // main 쿼리
@@ -10,7 +12,7 @@ const showMain = (req, res) => {
       const ARTICLE = data;
       const articleCount = ARTICLE.length;
       connection.query(
-        `SELECT USER_NAME FROM USER WHERE USER_ID ='${req.params.id}'`,
+        `SELECT USER_NAME, PROFILE_IMG FROM USER WHERE USER_ID ='${req.params.id}'`,
         (err2, data2) => {
           if (err2) throw err2;
           const NAME = data2[0];
@@ -43,7 +45,6 @@ const showMypage = (req, res) => {
       `SELECT * FROM user WHERE USER_ID = '${req.params.id}'`,
       (err, data) => {
         if (err) throw err;
-
         const ARTICLE = data;
         const articleCount = ARTICLE.length;
         connection.query(
@@ -86,32 +87,44 @@ const showNotice = (req, res) => {
 
 // 공지사항 글 추가하기 요청방식 = post
 const writeNotice = (req, res) => {
-  console.log('오긴했니?');
-  console.log(req.body.question, '질문');
-  console.log(req.body.answer, '대답');
   try {
     connection.query('SELECT * FROM NOTICE', (err, data) => {
       if (err) throw err;
       const LENGTH = data.length;
-      console.log(LENGTH);
+
       connection.query(
         `INSERT INTO NOTICE (CODE,QUESTION,ANSWER) VALUES ('${LENGTH + 1}','${
           req.body.question
         }','${req.body.answer}');`,
+        (err, data) => {
+          if (err) throw err;
+          // res.status(200).json('성공');
+        },
       );
     });
+    res.status(200).json('성공');
   } catch (error) {
     console.error(error);
     res.status(500).json('실패입니다.');
   }
 };
 
+// 공지사항 글 삭제하기 요청방식(post)
+const deleteNotice = (req, res) => {
+  try {
+    connection.query(`DELETE FROM NOTICE WHERE CODE = '${req.params.code}'`),
+      (err, data) => {
+        if (err) throw err;
+      },
+      res.status(200).json('삭제 성공');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const postMyImg = (req, res) => {
-  // console.log(req.file.filename);
-  // console.log(req.params.id);
   console.log('왓니? 정혁아~');
   try {
-    console.log(req.file);
     connection.query(
       `UPDATE USER SET PROFILE_IMG = '${req.file.filename}' WHERE USER_ID = '${req.params.id}'`,
       (err3, data3) => {
@@ -139,6 +152,7 @@ const commonImg = (req, res) => {
         console.log(data);
       },
     );
+    res.status(200).json('성공');
   } catch (error) {
     console.error(error);
     res.status(500).json('실패');
@@ -201,6 +215,10 @@ module.exports = {
   writeNotice,
   postMyImg,
   commonImg,
+
   managerImg,
   deleteData,
+
+  deleteNotice,
+
 };

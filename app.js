@@ -48,12 +48,20 @@ const loginRouter = require('./routes/login');
 const mainRouter = require('./routes/main');
 const subMainRouter = require('./routes/subMain');
 const writeRouter = require('./routes/write');
+
+const logRouter = require('./routes/log');
+const chatBot = require('./routes/chatBot');
+
 const managerRouter = require('./routes/manager');
 
 app.use('/', loginRouter);
 app.use('/main', mainRouter);
 app.use('/subMain', subMainRouter);
 app.use('/write', writeRouter);
+
+app.use('/log', logRouter);
+app.use('/chatBot', chatBot);
+
 app.use('/manager', managerRouter);
 
 app.use((err, req, res, next) => {

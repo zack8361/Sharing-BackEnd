@@ -6,6 +6,13 @@ const multer = require('multer');
 const fs = require('fs');
 const { managerImg, deleteData } = require('../controllers/mainController');
 
+const {
+  showConfirm,
+  showAccept,
+  showAcceptReturn,
+} = require('../controllers/managerController');
+
+
 // 컨트롤러 불러오기
 const objectDB = require('../controllers/objectController');
 
@@ -58,5 +65,11 @@ const router = express.Router();
 router.post('/', upload.single('image'), managerImg);
 
 router.post('/delete/:type', deleteData);
+
+// localhost:4000/manager/confirm/${type}
+
+router.get('/confirm/:type', showConfirm);
+router.post('/accept/:code', showAccept);
+router.post('/acceptReturn/:code', showAcceptReturn);
 
 module.exports = router;
