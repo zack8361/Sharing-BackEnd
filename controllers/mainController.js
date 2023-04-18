@@ -43,7 +43,6 @@ const showMypage = (req, res) => {
       `SELECT * FROM user WHERE USER_ID = '${req.params.id}'`,
       (err, data) => {
         if (err) throw err;
-
         const ARTICLE = data;
         const articleCount = ARTICLE.length;
         connection.query(
@@ -90,7 +89,7 @@ const writeNotice = (req, res) => {
     connection.query('SELECT * FROM NOTICE', (err, data) => {
       if (err) throw err;
       const LENGTH = data.length;
-      console.log(LENGTH);
+
       connection.query(
         `INSERT INTO NOTICE (CODE,QUESTION,ANSWER) VALUES ('${LENGTH + 1}','${
           req.body.question
@@ -108,18 +107,19 @@ const writeNotice = (req, res) => {
   }
 };
 
+// 공지사항 글 삭제하기 요청방식(post)
 const deleteNotice = (req, res) => {
   try {
-    connection.query(
-      `DELETE FROM NOTICE WHERE CODE = '${req.params.id}'`,
+    connection.query(`DELETE FROM NOTICE WHERE CODE = '${req.params.code}'`),
       (err, data) => {
         if (err) throw err;
       },
     );
     res.status(200).json('삭제 성공');
+
   } catch (error) {
-    console.log(error);
-    res.status(500).json('삭제 실패');
+    console.error(error);
+
   }
 };
 
