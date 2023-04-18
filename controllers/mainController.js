@@ -10,7 +10,7 @@ const showMain = (req, res) => {
       const ARTICLE = data;
       const articleCount = ARTICLE.length;
       connection.query(
-        `SELECT USER_NAME FROM USER WHERE USER_ID ='${req.params.id}'`,
+        `SELECT USER_NAME, PROFILE_IMG FROM USER WHERE USER_ID ='${req.params.id}'`,
         (err2, data2) => {
           if (err2) throw err2;
           const NAME = data2[0];
