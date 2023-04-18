@@ -48,11 +48,13 @@ const loginRouter = require('./routes/login');
 const mainRouter = require('./routes/main');
 const subMainRouter = require('./routes/subMain');
 const writeRouter = require('./routes/write');
+const managerRouter = require('./routes/manager');
 
 app.use('/', loginRouter);
 app.use('/main', mainRouter);
 app.use('/subMain', subMainRouter);
 app.use('/write', writeRouter);
+app.use('/manager', managerRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);

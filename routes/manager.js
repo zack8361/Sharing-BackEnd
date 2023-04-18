@@ -1,23 +1,16 @@
 const express = require('express');
 
+// 멀터 모듈 불러오기
 const multer = require('multer');
-
+// Filesystem 모듈 불러오기
 const fs = require('fs');
-const {
-  showMain,
-  showMypage,
-  showNotice,
-  writeNotice,
-  postMyImg,
-  commonImg,
-} = require('../controllers/mainController');
+const { managerImg, deleteData } = require('../controllers/mainController');
 
+// 컨트롤러 불러오기
 const objectDB = require('../controllers/objectController');
 
-// Filesystem 모듈 불러오기
-
 // 파일 업로드 설정
-const dir = './profile';
+const dir = './uploads';
 // 저장 설정
 const storage = multer.diskStorage({
   // 업로드를 할 폴더 설정
@@ -58,36 +51,12 @@ const upload = multer({
 // 서버의 최상단 폴더에 uploads 있는지 확인, 폴더가 없으면 만드는 코드
 if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
+// 물품 추가 페이지 불러오기
 const router = express.Router();
 
-// localhost:4000/main
-router.get('/:id', showMain);
+// manager main 에 img 업로드
+router.post('/', upload.single('image'), managerImg);
 
-// user_mypage 화면 출력
-router.get('/mypage/:id', showMypage);
-
-// notice 페이지 화면 출력
-router.get('/manager/notice', showNotice);
-
-// notice 페이지 데이터 추가
-router.post('/manager/notice', writeNotice);
-
-// mypage 이미지 업로드
-router.post('/mypage/:id', upload.single('image'), postMyImg);
-
-// mypage 기본 이미지로 변경
-router.post('/mypage/common/:id', commonImg);
-
-router.get('/', (req, res) => {
-  objectDB.getAllObjects((data) => {
-    // 컨트롤러에서 받아온 값
-    const OBJECT = data;
-    const objectCounts = OBJECT.length;
-
-    // 메인 페이지에 값 전달하기
-    res.render('main', { OBJECT, objectCounts });
-    res.status(200).json('main', { OBJECT, objectCounts });
-  });
-});
+router.post('/delete/:type', deleteData);
 
 module.exports = router;
