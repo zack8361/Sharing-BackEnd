@@ -116,7 +116,6 @@ const deleteNotice = (req, res) => {
       },
     );
     res.status(200).json('삭제 성공');
-
   } catch (error) {
     console.error(error);
 
