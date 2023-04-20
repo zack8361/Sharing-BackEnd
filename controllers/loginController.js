@@ -43,7 +43,6 @@ if (DB_MODE === 'mysql') {
           if (err) throw err;
           if (data.length === 0)
             return res.status(400).json('가입되지 않은 회원입니다!.');
-
           // bcrypt 모듈을 사용하여 암호화 된 비밀번호와 입력한 비밀번호가 동일한지 비교
           // const isSamePassword = bcrypt.compareSync(
           //   req.body.password,
