@@ -51,7 +51,7 @@ const showAcceptReturn = (req, res) => {
   console.log(req.params.code);
   try {
     connection.query(
-      `UPDATE OBJECT SET STATUS = 0 WHERE CODE = '${req.params.code}'`,
+      `UPDATE OBJECT SET STATUS = 0, RENT_USER_ID = '' WHERE CODE = '${req.params.code}'`,
       (err, data) => {
         if (err) throw err;
       },
